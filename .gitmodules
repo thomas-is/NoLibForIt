@@ -1,0 +1,6 @@
+[submodule "TOR"]
+	path = TOR
+	url = git@github.com:thomas-is/php-tor.git
+[submodule "API"]
+	path = API
+	url = git@github.com:thomas-is/php-api.git
