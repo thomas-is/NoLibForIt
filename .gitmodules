@@ -1,9 +1,9 @@
 [submodule "TOR"]
 	path = TOR
-	url = git@github.com:thomas-is/php-tor.git
+	url = git@github.com:thomas-is/NoLibForIt-TOR.git
 [submodule "API"]
 	path = API
-	url = git@github.com:thomas-is/php-api.git
+	url = git@github.com:thomas-is/NoLibForIt-API.git
 [submodule "NNTP"]
 	path = NNTP
 	url = git@github.com:thomas-is/NoLibForIt-NNTP.git
