@@ -2,7 +2,7 @@
 
 for FILE in $(ls)
 do
-  if [ -d $FILE ]; then
+  if [ -f "./$FILE/.git" ]; then
     echo "$FILE"
     cd ./$FILE
     git pull
