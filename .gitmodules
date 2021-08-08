@@ -4,3 +4,6 @@
 [submodule "API"]
 	path = API
 	url = git@github.com:thomas-is/php-api.git
+[submodule "NNTP"]
+	path = NNTP
+	url = git@github.com:thomas-is/NoLibForIt-NNTP.git
