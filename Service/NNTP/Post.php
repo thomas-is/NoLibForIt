@@ -4,17 +4,17 @@ namespace NoLibForIt\Service\NNTP;
 
 use \NoLibForIt\API\Answer  as Answer;
 
-class Article {
+class Post {
 
   public static function handle($request) {
 
-    if( $request->method != "GET" ) {
+    if( $request->method != "POST" ) {
       Answer::json(405,array("error"=>"method not allowed"));
     }
 
-    $mid  = @$request->argv[1];
+    $lines = explode("\n",$request->body);
 
-    if( empty($mid) ) {
+    if( empty($lines) ) {
       Answer::json(400,array("error"=>"bad request"));
     }
 
@@ -26,13 +26,10 @@ class Article {
       $nntp->auth(NNTP_USER,NNTP_PASS);
     }
 
-    $nntp->article($mid);
-    if( $nntp->status->code != 220 ) {
+    if ( ! $nntp->post($lines) ) {
       Answer::json(520,array("status"=>$nntp->status));
     }
-
-    $article = new \NoLibForIt\NNTP\Article($nntp->lines);
-    Answer::json(200,$article);
+    Answer::json(200,array("status"=>$nntp->status));
 
   }
 

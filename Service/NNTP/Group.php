@@ -8,10 +8,6 @@ class Group {
 
   public static function handle($request) {
 
-    if( ! defined('API_NNTP_HOST') ) {
-      Answer::json(500,array("error"=>"API_NNTP_HOST is undefined"));
-    }
-
     if( $request->method != "GET" ) {
       Answer::json(405,array("error"=>"method not allowed"));
     }
@@ -24,10 +20,14 @@ class Group {
       Answer::json(400,array("error"=>"bad request"));
     }
 
-    $nntp = new \NoLibForIt\NNTP\Client(API_NNTP_HOST);
+    $nntp = new \NoLibForIt\NNTP\Client(NNTP_HOST,NNTP_PORT,NNTP_USE_TOR);
     if( empty($nntp) ) {
       Answer::json(500,array("error"=>"NNTP client failed"));
     }
+
+//    if( defined('NNTP_USER') && defined('NNTP_PASS') ) {
+//      $nntp->auth(NNTP_USER,NNTP_PASS);
+//    }
 
     $group = new \NoLibForIt\NNTP\Group($name,$nntp);
     if( $nntp->status->code != 211 ) {
