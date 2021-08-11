@@ -25,9 +25,9 @@ class Group {
       Answer::json(500,array("error"=>"NNTP client failed"));
     }
 
-//    if( defined('NNTP_USER') && defined('NNTP_PASS') ) {
-//      $nntp->auth(NNTP_USER,NNTP_PASS);
-//    }
+    if( defined('NNTP_USER') && defined('NNTP_PASS') ) {
+      $nntp->auth(NNTP_USER,NNTP_PASS);
+    }
 
     $group = new \NoLibForIt\NNTP\Group($name,$nntp);
     if( $nntp->status->code != 211 ) {
