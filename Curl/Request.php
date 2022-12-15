@@ -4,9 +4,9 @@ namespace NoLibForIt\Curl;
 
 class Request {
 
-  protected $options    = [];
-  protected $queryParam = []; /* [ ["foo" => null ], ["foo" => 1] ] */
-  public    $answer;
+  protected array  $options    = [];
+  protected array  $queryParam = []; /* [ ["foo" => null ], ["foo" => 1] ] */
+  public    Answer $answer;
 
   /**
     * instanciate with location
@@ -36,21 +36,12 @@ class Request {
     */
   public function withParams( array $params ) {
     foreach( $params as $key => $value ) {
-      $this->addParam( $key, $value );
+      $this->queryParam[] = [ $key => $value ];
     }
     return $this;
   }
-  /**
-    * add single query param
-    * @param  string $key
-    *         mixed  $value
-    * @return $this
-    */
-  public function addParam( string $key, $value = null ) {
-    $this->queryParam[] = [ $key => $value ];
-    return $this;
-  }
-  /**
+
+/**
     * append $header to CURLOPT_HTTPHEADER
     * @param  string $header
     * @return $this
@@ -161,11 +152,7 @@ class Request {
         "header"     => @$this->options[CURLOPT_HTTPHEADER],
         "body"       => @$this->options[CURLOPT_POSTFIELDS],
       ],
-      "answer" => [
-        "statusCode" => $this->statusCode,
-        "header"     => $this->header,
-        "body"       => $this->body,
-      ],
+      "answer" => $this->answer
     ];
   }
 
@@ -183,7 +170,7 @@ class Request {
 
   /**
     * performs the request
-    * @return Answer
+    * @return $this
     **/
   private function query() {
 
@@ -195,7 +182,7 @@ class Request {
 
     $this->answer = new Answer($this->options);
 
-    return $this->answer;
+    return $this;
 
   }
 

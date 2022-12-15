@@ -4,10 +4,9 @@ namespace NoLibForIt\Curl;
 
 class Answer {
 
-  public $statusCode = 0;
-  public $header     = [];
-  public $body       = "";
-
+  public int    $statusCode = 0;
+  public array  $header     = [];
+  public string $body       = "";
 
   /**
     * perform the request and parse the answer
@@ -16,19 +15,18 @@ class Answer {
   public function __construct( array $options ) {
 
     $ch = curl_init();
+
     curl_setopt_array($ch, $options);
+
     $packet = curl_exec($ch);
     $info   = curl_getinfo($ch);
+
     curl_close($ch);
 
     $this->statusCode = $info['http_code'];
     $headerSize       = $info['header_size'];
     $this->header     = self::parseLastHeader(substr($packet,0,$headerSize));
     $this->body       = substr($packet,$headerSize);
-
-    if( $this-> statusCode >= 400 ) {
-      throw new \Exception(json_encode($this));
-    }
 
   }
 
